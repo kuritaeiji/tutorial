@@ -1,2 +1,12 @@
 <% provide(:title, 'home') %>
-<h1>StaticPages#home</h1>
+<div class="text-center jumbotron">
+  <h1>ようこそサンプルアプリへ</h1>
+  <h2>
+    This is the home page for the
+    <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
+    sample application.
+  </h2>
+  <%= link_to('ユーザー登録', sign_up_path, class: 'btn btn-lg btn-primary') %>
+</div>
+
+<%= link_to(image_pack_tag('rails.png', alt: 'rails-logo'), 'http://rubyonrails.org/') %>

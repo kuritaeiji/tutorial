@@ -8,9 +8,23 @@ RSpec.describe "StaticPages", type: :request do
     end
   end
 
-  describe('GET /static_pages/help') do
+  describe('GET /help') do
     it('200レスポンスが返る') do
-      get('/static_pages/help')
+      get('/help')
+      expect(response.status).to eq(200)
+    end
+  end
+
+  describe('GET /about') do
+    it('200レスポンスが返る') do
+      get('/about')
+      expect(response.status).to eq(200)
+    end
+  end
+
+  describe('GET /contact') do
+    it('200レスポンスが返る') do
+      get('/contact')
       expect(response.status).to eq(200)
     end
   end
