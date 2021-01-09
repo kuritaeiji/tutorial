@@ -1,17 +1,35 @@
 module SessionsHelper
   def log_in(user)
-    session_id = SecureRandom.base64(24)
-    session[:id] = session_id
-    user.update(session_id: session_id)
+    session[:user_id] = user.id
   end
 
-  def log_out
-    session.delete(:id)
+  def remember(user)
+    user.remember
+    cookies[:remember_token] = { value: user.remember_token, expired: 20.years.from_now }
+    cookies.signed[:user_id] = { value: user.id, expired: 20.years.from_now }
+  end
+
+  def log_out(user)
+    forget(current_user)
+    session.delete(:user_id)
     @current_user = nil
   end
 
+  def forget(user)
+    user.forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_digest)
+  end
+
   def current_user
-    @current_user ||= User.find_by(session_id: session[:id]) if session[:id]
+    if session[:user_id]
+      @current_user ||= User.find_by(id: session[:user_id])
+    elsif user_id = cookies.signed[:user_id]
+      if user = User.find_by(id: user_id) && user.authenticated?(cookies[:remember_token])
+        log_in(user)
+        @current_user = user
+      end
+    end
   end
 
   def logged_in?
