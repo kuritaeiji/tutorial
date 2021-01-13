@@ -1,0 +1,12 @@
+<%= provide(:title, 'ユーザー一覧') %>
+<h1 class="text-center">ユーザー一覧</h1>
+
+<div>
+  <ul class="list-unstyled">
+    <%= render(@users) %>
+  </ul>
+
+  <div class="d-flex justify-content-center">
+    <%= will_paginate(@users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer) %>
+  </div>
+</div>
