@@ -1,10 +1,10 @@
-<%= provide(:title, '新規登録') %>
-<%= provide(:button_text, '登録') %>
-<h1 class="text-center">新規登録</h1>
+<%= provide(:title, 'ユーザー情報編集') %>
+<%= provide(:button_text, '更新') %>
+<h1 class="text-center">ユーザー情報編集</h1>
 
 <div class="row d-flex justify-content-center">
   <div class="col-md-6">
-    <%= form_with(model: @user, url: sign_up_path, local: true) do |f| %>
+    <%= form_with(model: @user, local: true) do |f| %>
       <%= render('shared/error_messages') %>
 
       <%= render(partial: 'form', locals: { f: f }) %>

@@ -1,0 +1,5 @@
+<li class="border-bottom border-secondary mb-3">
+  <%= gravatar_for(user) %>
+  <%= link_to(user.name, user) %>
+  <%= link_to('削除', user, method: :delete, class: 'btn btn-danger')%>
+<li>
