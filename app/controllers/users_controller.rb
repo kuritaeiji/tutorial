@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     if @user.save
       log_in(@user)
       remember(@user)
-      flash[:success] = 'ようこそ、サンプルアプリへ'
+      flash[:success] = 'メールをチェックしてアカウントを有効化してください'
       redirect_to(@user)
     else
       render('new')

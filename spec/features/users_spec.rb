@@ -20,7 +20,16 @@ RSpec.feature "Users", type: :feature do
       click_on('登録')
     }.to change(User, :count).by(1)
 
-    expect(current_path).to eq(user_path(User.last))
-    expect(page).to have_selector('.alert.alert-success', text: 'ようこそ、サンプルアプリへ')
+    user = User.last
+    expect(current_path).to eq(user_path(user))
+    expect(page).to have_selector('.alert.alert-success', text: 'メールをチェックしてアカウントを有効化してください')
+
+    mail = ActionMailer::Base.deliveries.last
+
+    aggregate_failures do
+      expect(mail.to).to eq([valid_params[:email]])
+      expect(mail.subject).to eq('アカウント有効化')
+      expect(mail.body).to match(CGI.escape(valid_params[:email]))
+    end
   end
 end
