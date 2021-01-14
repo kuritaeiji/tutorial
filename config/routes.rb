@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   get('/account_activate', to: 'account_activations#activate')
 
   resources(:users, only: [:index, :show, :edit, :update, :destroy])
+  resources(:password_resets, only: [:new, :create, :edit, :update])
 end

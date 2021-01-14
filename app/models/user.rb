@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor(:remember_token, :activation_token)
+  attr_accessor(:remember_token, :activation_token, :reset_token)
 
   VALID_EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -37,6 +37,20 @@ class User < ApplicationRecord
 
   def forget
     update(remember_digest: nil)
+  end
+
+  def create_reset_token_and_digest
+    self.reset_token = self.class.create_token
+    reset_digest = self.class.digest(reset_token)
+    update(reset_digest: reset_digest, reset_sent_at: Time.zone.now)
+  end
+
+  def send_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  def password_reset_expired?
+    reset_sent_at > 1.day.ago
   end
 
   private
