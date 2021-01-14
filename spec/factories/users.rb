@@ -5,9 +5,14 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
     admin { true }
+    activated { true }
   end
 
   trait(:not_admin) do
     admin { false }
+  end
+
+  trait(:not_activated) do
+    activated { false }
   end
 end

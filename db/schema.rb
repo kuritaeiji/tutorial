@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_211208) do
+ActiveRecord::Schema.define(version: 2021_01_13_223339) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_211208) do
     t.string "session_id"
     t.string "remember_digest"
     t.boolean "admin", default: false
+    t.boolean "activated", default: false
+    t.string "activation_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["session_id"], name: "index_users_on_session_id", unique: true
   end

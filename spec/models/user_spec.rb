@@ -31,4 +31,17 @@ RSpec.describe User, type: :model do
     user = create(:user, email: 'TEST@TEST.com')
     expect(user.reload.email).to eq('test@test.com')
   end
+
+  it('digestとtokenの比較') do
+    user = build(:user)
+    user.activation_token = User.create_token
+    user.activation_digest = User.digest(user.activation_token)
+    expect(user.authenticated?(:activation, user.activation_token)).to eq(true)
+  end
+
+  it('ユーザーが作成された時認証メールを送信すること') do
+    allow(UserMailer).to receive_message_chain(:account_activation, :deliver_now)
+    user = create(:user)
+    expect(UserMailer).to have_received(:account_activation).with(user)
+  end
 end
