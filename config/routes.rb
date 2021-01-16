@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   delete('/log_out', to: 'sessions#destroy')
   get('/account_activate', to: 'account_activations#activate')
 
-  resources(:users, only: [:index, :show, :edit, :update, :destroy])
+  resources(:users, only: [:index, :show, :edit, :update, :destroy]) do
+    member do
+      get(:followings, :followers)
+    end
+  end
   resources(:password_resets, only: [:new, :create, :edit, :update])
   resources(:microposts, only: [:create, :destroy])
+  resources(:relationships, only: [:create, :destroy])
 end

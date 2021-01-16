@@ -96,4 +96,24 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe('GET /users/:id/followings') do
+    context('ログインしていない時') do
+      let(:user) { create(:user) }
+      it('ログイン画面にリダイレクトする') do
+        get("/users/#{user.id}/followings")
+        expect(response).to redirect_to(log_in_path)
+      end
+    end
+  end
+
+  describe('GET /users/:id/followers') do
+    context('ログインしていない時') do
+      let(:user) { create(:user) }
+      it('ログイン画面にリダイレクトする') do
+        get("/users/#{user.id}/followers")
+        expect(response).to redirect_to(log_in_path)
+      end
+    end
+  end
 end

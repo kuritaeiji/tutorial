@@ -1,0 +1,4 @@
+<%= form_with(model: current_user.active_relationships.new, local: true) do |f|%>
+  <%= f.hidden_field_tag(:id, @user.id) %>
+  <%= f.submit('follow', class: 'btn btn-primary') %>
+<% end %>

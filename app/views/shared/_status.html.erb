@@ -1,0 +1,9 @@
+<% @user ||= current_user %>
+<div class="d-flex">
+  <div class="followers-count">
+    <%= link_to("#{@user.followings.count} folowers", followings_user_path(@user)) %>
+  </div>
+  <div class="followings-count">
+    <%= link_to("#{@user.followings.count} followings", followers_user_path(@user)) %>
+  </div>
+</div>
