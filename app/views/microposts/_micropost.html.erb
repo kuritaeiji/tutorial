@@ -1,0 +1,18 @@
+<div class="d-flex border-bottom border-secondary mb-2">
+  <div class="mr-3">
+    <%= gravatar_for(micropost.user) %>
+  </div>
+  <div>
+    <h3 class="d-block"><%= micropost.content %></h3>
+    <p class="d-block">
+      <%= l(micropost.created_at) %>
+      <% if current_user?(micropost.user) %>
+        <%= link_to('削除', micropost, method: :delete, class: 'ml-2')%>
+      <% end %>
+    </p>
+  </div>
+
+  <% if micropost.image %>
+    <%= image_pack_tag(micropost.image.file_name) %>
+  <% end %>
+</div>

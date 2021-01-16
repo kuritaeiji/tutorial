@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many(:microposts, dependent: :destroy)
+
   attr_accessor(:remember_token, :activation_token, :reset_token)
 
   VALID_EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -51,6 +53,10 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at > 1.day.ago
+  end
+
+  def feed
+    microposts
   end
 
   private

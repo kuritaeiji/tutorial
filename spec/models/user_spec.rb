@@ -10,6 +10,8 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:password) }
   it { is_expected.to validate_length_of(:password).is_at_least(6) }
 
+  it { is_expected.to have_many(:microposts).dependent(:destroy) }
+
   it('メールアドレスは有効なメールアドレスを持つ') do
     invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
       foo@bar_baz.com foo@bar+baz.com]

@@ -5,7 +5,7 @@
 <div class="row d-flex justify-content-center">
   <div class="col-md-6">
     <%= form_with(model: @user, url: sign_up_path, local: true) do |f| %>
-      <%= render('shared/error_messages') %>
+      <%= render('shared/error_messages', object: @user) %>
 
       <%= render(partial: 'form', locals: { f: f }) %>
     <% end %>
