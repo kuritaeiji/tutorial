@@ -1,6 +1,11 @@
 class User < ApplicationRecord
   has_many(:microposts, dependent: :destroy)
 
+  has_many(:active_relationships, class_name: 'Relationship', foreign_key: :follower_id, dependent: :destroy)
+  has_many(:followings, through: :active_relationships, source: :followed)
+  has_many(:passive_relationships, class_name: 'Relationship', foreign_key: :followed_id, dependent: :destroy)
+  has_many(:followers, through: :passive_relationships, source: :follower)
+
   attr_accessor(:remember_token, :activation_token, :reset_token)
 
   VALID_EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -13,6 +18,9 @@ class User < ApplicationRecord
   before_save { self.email = email.downcase }
   before_create(:create_activation_digest)
   after_create { UserMailer.account_activation(self).deliver_now }
+
+  default_scope(-> { order(id: :asc) })
+
 
   has_secure_password
 
@@ -57,6 +65,19 @@ class User < ApplicationRecord
 
   def feed
     microposts
+  end
+
+  def follow(other_user)
+    relationship = active_relationships.new(followed_id: other_user.id)
+    relationship.save
+  end
+
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def following?(other_user)
+    followings.include?(other_user)
   end
 
   private
