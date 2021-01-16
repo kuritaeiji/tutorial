@@ -18,3 +18,11 @@ User.create!(
     admin: false
   )
 end
+
+users = User.all.order(created_at: :asc).take(6)
+users.each do |user|
+  50.times do
+    content = Faker::Lorem.sentence(5)
+    user.microposts.create!(content: content)
+  end
+end

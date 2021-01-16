@@ -1,8 +1,8 @@
-<% unless @user.errors.full_messages.empty? %>
+<% unless object.errors.full_messages.empty? %>
   <div class="alert alert-danger">
-    <%= "#{@user.errors.count}個のエラーがあります。" %>
+    <%= "#{object.errors.count}個のエラーがあります。" %>
     <ul>
-      <% @user.errors.full_messages.each do |message| %>
+      <% object.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>

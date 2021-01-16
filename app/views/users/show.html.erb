@@ -4,5 +4,11 @@
     <%= gravatar_for(@user) %>
     <%= @user.name %>
   </h1>
+  <div class="col-md-8">
+    <% unless @microposts.empty? %>
+      <h2>マイクロポスト（<%= @user.microposts.count %>）</h2>
+      <%= render(@microposts) %>
+      <%= will_paginate(@microposts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer) %>
+    <% end %>
+  </div>
 </div>
-
